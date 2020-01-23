@@ -22,21 +22,8 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public Cart getCart(String custId) {
-        List<Cart> cartDetails = (List<Cart>) cartRepository.findByCustomerId(custId);
-        Cart cartObj = new Cart();
-        cartDetails.stream().forEach(cart -> {
-            if ((cart.getCustomerId()).equals(custId)) {
-                List<Product> productList = cart.getProductsBought();
-                cartObj.setProductsBought(productList);
-                cartObj.setCustomerId(cart.getCustomerId());
-                System.out.println(cartObj.getProductsBought());
-                cartObj.setAddress(cart.getAddress());
-                cartObj.setDateOfPlacingOrder(cart.getDateOfPlacingOrder());
-                cartObj.setCustomerEmailid(cart.getCustomerEmailid());
-            }
-        });
-
-        return cartObj;
+        Cart cartDetails = cartRepository.findByCustomerId(custId);
+        return cartDetails;
     }
 
     @Override
@@ -53,26 +40,23 @@ public class CartServiceImpl implements CartService {
                 else
                     updatedList.add(product);
             }
-            for (Product listval: updatedList)
-            {
+            for (Product listval : updatedList) {
                 productDetails.add(listval);
             }
             existingCart.setProductsBought(productDetails);
             cartRepository.save(existingCart);
-        return existingCart;
-        }
-        else {
+            return existingCart;
+        } else {
             Cart cart = new Cart();
             cart.setCustomerId(custId);
             List<Product> newList = new ArrayList<>();
             newList.add(product);
             cart.setProductsBought(newList);
             cart.setAddress("ab");
-            cart.setCustomerEmailid("A@123.com");
+            cart.setCustomerEmailId("A@123.com");
             cartRepository.save(cart);
 
             return cart;
         }
     }
-
 }

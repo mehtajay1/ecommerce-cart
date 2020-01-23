@@ -17,7 +17,7 @@ import java.util.List;
 @Builder
 public class Cart {
     @Id
-    private String customerEmailid;
+    private String customerEmailId;
 //    @JsonBackReference
     private List<Product> productsBought;
 
